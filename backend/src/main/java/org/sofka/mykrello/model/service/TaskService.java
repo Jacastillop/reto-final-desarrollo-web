@@ -50,7 +50,8 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     public TaskDomain delete(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+        var optionalTask = taskRepository.findById(id);
+        taskRepository.delete(optionalTask.get());
+        return optionalTask.get();
     }
 }
