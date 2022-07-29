@@ -35,8 +35,8 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     public TaskDomain create(TaskDomain task) {
-        // TODO Auto-generated method stub
-        return null;
+        var newTask = taskRepository.save(task);
+        return newTask;
     }
 
     @Override

@@ -3,12 +3,7 @@ package org.sofka.mykrello.model.domain;
 import java.io.Serializable;
 import java.time.Instant;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 
@@ -18,6 +13,12 @@ import lombok.Data;
 public class TaskDomain implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @PreUpdate
+    public void preUpdate() {
+        if (this.updatedAt == null)
+            this.updatedAt = Instant.now();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +41,7 @@ public class TaskDomain implements Serializable {
     private Instant deliveryDate;
 
     @Column(name = "tsk_created_at", nullable = false,updatable = false)
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
     @Column(name = "tsk_updated_at")
     private Instant updatedAt;
