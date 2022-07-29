@@ -28,21 +28,24 @@ public class TaskService implements TaskServiceInterface {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TaskDomain findById(Integer id) {
         var task = taskRepository.findById(id);
         return task.isPresent() ? task.get() : null;
     }
 
     @Override
+    @Transactional
     public TaskDomain create(TaskDomain task) {
         var newTask = taskRepository.save(task);
         return newTask;
     }
 
     @Override
+    @Transactional
     public TaskDomain update(Integer id, TaskDomain task) {
-        // TODO Auto-generated method stub
-        return null;
+        task.setId(id);
+        return taskRepository.save(task);
     }
 
     @Override

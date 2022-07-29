@@ -37,7 +37,7 @@ public class TaskDomain implements Serializable {
     @Column(name = "tsk_description", length = 500)
     private String description;
 
-    @Column(name = "tsk_delivery_date", nullable = false)
+    @Column(name = "tsk_delivery_date")
     private Instant deliveryDate;
 
     @Column(name = "tsk_created_at", nullable = false,updatable = false)
