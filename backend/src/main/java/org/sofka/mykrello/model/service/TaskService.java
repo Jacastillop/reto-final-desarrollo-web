@@ -23,8 +23,7 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     public List<TaskDomain> findAllTasksById(Integer idBoard) {
-        // TODO Auto-generated method stub
-        return null;
+        return taskRepository.findAllByIdBoard(idBoard);
     }
 
     @Override

@@ -18,6 +18,12 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    @GetMapping(path = "/api/vi/task/task-board/{idBoard}")
+    public ResponseEntity<MyResponseUtility> getAllTasksByBoard(@PathVariable(value="idBoard") Integer idBoard){
+        response.data = taskService.findAllTasksById(idBoard);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
     @GetMapping(path = "/api/v1/task/{id}")
     public ResponseEntity<MyResponseUtility> getTasksById(@PathVariable(value = "id") Integer id) {
         response.data = taskService.findById(id);
