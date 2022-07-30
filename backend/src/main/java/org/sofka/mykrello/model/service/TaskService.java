@@ -1,10 +1,9 @@
 package org.sofka.mykrello.model.service;
 
+import java.time.Instant;
 import java.util.List;
 
-import org.sofka.mykrello.model.domain.BoardDomain;
 import org.sofka.mykrello.model.domain.TaskDomain;
-import org.sofka.mykrello.model.repository.BoardRepository;
 import org.sofka.mykrello.model.repository.TaskRepository;
 import org.sofka.mykrello.model.service.interfaces.TaskServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +41,20 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     @Transactional
-    public TaskDomain update(Integer id, TaskDomain task) {
-        task.setId(id);
-        return taskRepository.save(task);
+    public TaskDomain update(Integer id, TaskDomain newTask) {
+        String name = newTask.getName();
+        String description = newTask.getDescription();
+        Instant deliveryDate = newTask.getDeliveryDate();
+
+        var actualTask = taskRepository.findById(id);
+
+        if (actualTask.isEmpty()) return null;
+
+        if(name != null)  actualTask.get().setName(name);
+        if(description != null) actualTask.get().setDescription(description);
+        if(deliveryDate != null) actualTask.get().setDeliveryDate(deliveryDate);
+
+        return taskRepository.save(actualTask.get());
     }
 
     @Override
@@ -53,4 +63,6 @@ public class TaskService implements TaskServiceInterface {
         taskRepository.delete(optionalTask.get());
         return optionalTask.get();
     }
+
+
 }
