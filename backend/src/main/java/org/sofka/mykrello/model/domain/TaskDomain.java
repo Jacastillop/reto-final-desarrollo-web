@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
@@ -53,7 +54,12 @@ public class TaskDomain implements Serializable {
 
     @Transient
     @JsonManagedReference(value = "log-task")
-    @OneToMany(mappedBy = "task",fetch = FetchType.EAGER, targetEntity = LogDomain.class)
+    @OneToMany(mappedBy = "task",fetch = FetchType.EAGER, targetEntity = LogDomain.class, cascade = CascadeType.ALL)
     private List<LogDomain> logs = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = ColumnDomain.class, optional = false, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "clm_id_column", insertable = false, updatable = false)
+    @JsonBackReference(value = "task-column")
+    private ColumnDomain column;
 
 }

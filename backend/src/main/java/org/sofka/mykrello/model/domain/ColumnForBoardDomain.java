@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 @Data
@@ -37,28 +38,20 @@ public class ColumnForBoardDomain implements Serializable {
     @Column(name = "cfb_id", nullable = false)
     private Integer id;
 
-    @Column(name = "brd_id_board",nullable = false)
-    private Integer idBoard;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = BoardDomain.class, optional = false, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "brd_id_board", nullable = false)
+    @JsonBackReference(value = "columnsForBoard")
+    private BoardDomain board;
 
-    @Column(name = "clm_id_column")
-    private Integer idColumn;
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = ColumnDomain.class, optional = false, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "clm_id_column", nullable = false)
+    @JsonManagedReference(value = "columnForBoards")
+    private ColumnDomain column;
 
     @Column(name = "cfb_created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
     @Column(name = "cfb_updated_at")
     private Instant updatedAt;
-
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = BoardDomain.class, optional = false, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "brd_id_board", insertable = false, updatable = false)
-    @JsonBackReference(value = "columnsForBoard")
-    private BoardDomain board;
-
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = ColumnDomain.class, optional = false, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "clm_id_column", insertable = false, updatable = false)
-    @JsonBackReference(value = "columnForBoards")
-    private ColumnDomain column;
-
-
 
 }
