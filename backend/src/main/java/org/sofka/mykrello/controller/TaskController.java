@@ -48,4 +48,10 @@ public class TaskController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @PutMapping(path = "api/v1/task/move-to-column/{id}")
+    public ResponseEntity<MyResponseUtility> moveToColumn(@PathVariable(value = "id") Integer id, @RequestBody TaskDomain task){
+        response.data = taskService.moveToColumn(id,task);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
 }

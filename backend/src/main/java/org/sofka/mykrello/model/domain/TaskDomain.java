@@ -2,9 +2,14 @@ package org.sofka.mykrello.model.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 @Data
@@ -45,5 +50,10 @@ public class TaskDomain implements Serializable {
 
     @Column(name = "tsk_updated_at")
     private Instant updatedAt;
+
+    @Transient
+    @JsonManagedReference(value = "log-task")
+    @OneToMany(mappedBy = "task",fetch = FetchType.EAGER, targetEntity = LogDomain.class)
+    private List<LogDomain> logs = new ArrayList<>();
 
 }
