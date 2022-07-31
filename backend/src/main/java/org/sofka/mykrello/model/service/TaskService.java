@@ -63,9 +63,10 @@ public class TaskService implements TaskServiceInterface {
 
     @Override
     public TaskDomain delete(Integer id) {
-        var optionalTask = taskRepository.findById(id);
-        taskRepository.delete(optionalTask.get());
-        return optionalTask.get();
+        var task = taskRepository.findById(id).orElse(null);
+        logService.deleteByTaskId(task.getId());
+        taskRepository.deleteById(task.getId());
+        return task;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.sofka.mykrello.controller;
 
 import org.sofka.mykrello.model.domain.TaskDomain;
+import org.sofka.mykrello.model.service.LogService;
 import org.sofka.mykrello.model.service.TaskService;
 import org.sofka.mykrello.utilities.MyResponseUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private LogService logService;
 
     @GetMapping(path = "/api/vi/task/task-board/{idBoard}")
     public ResponseEntity<MyResponseUtility> getAllTasksByBoard(@PathVariable(value="idBoard") Integer idBoard){
@@ -47,6 +51,7 @@ public class TaskController {
         response.data = taskService.delete(id);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
 
     @PutMapping(path = "api/v1/task/move-to-column/{id}")
     public ResponseEntity<MyResponseUtility> moveToColumn(@PathVariable(value = "id") Integer id, @RequestBody TaskDomain task){
