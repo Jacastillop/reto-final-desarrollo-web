@@ -46,24 +46,33 @@ export class Table {
 
             const tr = document.createElement('tr');
 
-            const tdNombre = document.createElement('td');
-            tdNombre.textContent = item.nombre;
+            const tdId = document.createElement('td');
+            tdId.textContent = item.id;
 
-            const tdApellido = document.createElement('td');
-            tdApellido.textContent = item.apellido;
+            const tdIdColumn = document.createElement('td');
+            tdIdColumn.textContent = item.idColumn;
 
-            const tdCorreo = document.createElement('td');
-            tdCorreo.textContent = item.correo;
+            const tdIdBoard = document.createElement('td');
+            tdIdBoard.textContent = item.idBoard;
 
-            const tdTelefono = document.createElement('td');
-            tdTelefono.textContent = item.telefono;
+            const tdName = document.createElement('td');
+            tdName.textContent = item.name;
 
-            const tdCreado = document.createElement('td');
-            tdCreado.textContent = item.creado;
+            const tdDescription = document.createElement('td');
+            tdDescription.textContent = item.description;
+
+            const tdDeliveryDate = document.createElement('td');
+            tdDeliveryDate.textContent = item.deliveryDate;
+
+            const tdCreatedAt = document.createElement('td');
+            tdCreatedAt.textContent = item.createdAt;
+
+            const tdUpdatedAt = document.createElement('td');
+            tdUpdatedAt.textContent = item.updatedAt;
 
             const tdAcciones = this.#privateAcciones(document.createElement('td'), item.id);
 
-            tr.append(tdNombre, tdApellido, tdCorreo, tdTelefono, tdCreado, tdAcciones);
+            tr.append(tdId, tdIdColumn, tdIdBoard, tdName, tdDescription,tdDeliveryDate,tdCreatedAt,tdUpdatedAt,tdAcciones);
             tbody.append(tr);
         });
 
