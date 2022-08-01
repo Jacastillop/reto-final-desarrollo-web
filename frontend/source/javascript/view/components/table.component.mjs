@@ -1,24 +1,20 @@
 import { Config } from "../../config.mjs";
 
 export class Table {
-  #table;
   #privateTable;
   #privateHeader;
   #privateData;
+  #withActions;
 
   constructor(header) {
     this.#privateData = [];
     this.#privateHeader = header;
+    this.#withActions = false;
   }
 
   get() {
     this.#privateGenerateTable();
     return this.#privateTable;
-  }
-
-  
-  set Data(data) {
-    this.#privateData = data;
   }
 
   #privateGenerateTable() {
@@ -31,7 +27,6 @@ export class Table {
   }
 
   #privateCreateHeader(thead) {
-
     const tr = document.createElement("tr");
     this.#privateHeader.forEach((text) => {
       const th = document.createElement("th");
@@ -46,7 +41,7 @@ export class Table {
     this.#privateData.forEach((item) => {
       item = item.getValues();
 
-      const tr = document.createElement("tr");
+      let tr = document.createElement("tr");
 
       for (let propiedad in item) {
         let td = document.createElement("td");
@@ -54,19 +49,20 @@ export class Table {
         tr.append(td);
       }
 
-      const tdAcciones = this.#privateAcciones(
-        document.createElement("td"),
-        item.id
-      );
-
-      tr.append(tdAcciones);
+      if (this.#withActions) {
+        const tdActions = this.#addActions(
+          document.createElement("td"),
+          item.id
+        );
+        tr.append(tdActions);
+      }
       tbody.append(tr);
     });
 
     return tbody;
   }
 
-  #privateAcciones(td, id) {
+  #addActions(td, id) {
     const div = document.createElement("div");
     div.classList.add("btn-group");
 
@@ -82,7 +78,14 @@ export class Table {
 
     div.append(buttonUpdate, buttonDelete);
     td.append(div);
-
     return td;
+  }
+
+  addActions() {
+    this.#withActions = true;
+  }
+
+  set Data(data) {
+    this.#privateData = data;
   }
 }

@@ -25,6 +25,7 @@ export class IndexView {
 
     init() {
         this.#privateTable.Data = this.#privateData;
+        this.#privateTable.addActions();
         this.#privateContainer.append(
             this.#privateNavbar.get(),
             this.#privateTable.get()

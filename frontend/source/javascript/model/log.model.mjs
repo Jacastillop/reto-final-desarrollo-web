@@ -13,7 +13,7 @@ export class LogModel {
             this.#idTask = data.idTask;
             this.#idColumnPrevious = data.idColumnPrevious;
             this.#idColumnCurrent = data.idColumnCurrent;
-            this.#createdAt = data.createdAt;
+            this.#createdAt = new Date(data.createdAt).toLocaleString();
         }
     }
 

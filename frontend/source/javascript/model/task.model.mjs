@@ -19,9 +19,9 @@ export class TaskModel {
         this.#idBoard = data.idBoard;
         this.#name = data.name;
         this.#description = data.description;
-        this.#deliveryDate = data.deliveryDate;
-        this.#createdAt = data.createdAt;
-        this.#updateAt = data.updatedAt;
+        this.#deliveryDate = new Date(data.deliveryDate).toLocaleString();
+        this.#createdAt = new Date(data.createdAt).toLocaleString();
+        this.#updateAt = new Date(data.updatedAt).toLocaleString();
         this.#logs = this.#toArrayLogs(data.logs);
     }
 

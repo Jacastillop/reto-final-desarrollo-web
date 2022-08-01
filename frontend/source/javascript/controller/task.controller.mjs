@@ -16,7 +16,9 @@ class TaskController {
     }
 
     async init() {
-        await this.#taskService.loadTaskById(6);
+        const params = new URLSearchParams(window.location.search);
+        const taskId = params.get("id");
+        await this.#taskService.loadTaskById(taskId);
         this.#view.Data = this.#taskService.getTaskById();
         this.#view.init();
     }
