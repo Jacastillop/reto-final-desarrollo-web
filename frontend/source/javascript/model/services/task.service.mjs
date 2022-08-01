@@ -2,29 +2,34 @@ import { Config } from "../../config.mjs";
 import { TaskModel } from "../task.model.mjs";
 
 export class TaskService {
-    #tasks;
+    #tasksByBoard;
+    #taskById;
 
     constructor() {
-        this.#tasks = [];
+        this.#tasksByBoard = [];
      }
 
-    async loadTasksByBoard() {
-        const response = await fetch(`${Config.BackendURL}/1`)
+    async loadTasksByBoard(idBoard) {
+        const response = await fetch(`${Config.BackendURL}task/task-board/${idBoard}`)
         const { data } = await response.json(); 
         data.forEach(item => {
             const task = new TaskModel(item);
-            this.#tasks.push(task);
+            this.#tasksByBoard.push(task);
         });
-        return this.#tasks;
     }
 
     getTasksByBoard(){
-        return this.#tasks;
+        return this.#tasksByBoard;
     }
 
-    async getUserById(id) {
-        const data = await fetch(`${Config.BackendURL}/usuario/records/${id}`).then(response => response.json());
-        return new UserModel(data);
+    async loadTaskById(id) {
+        const response = await fetch(`${Config.BackendURL}task/${id}`);
+        const { data } = await response.json();
+        this.#taskById = new TaskModel(data);
+    }
+
+    getTaskById(){
+        return this.#taskById;
     }
 
     async update(id, data) {

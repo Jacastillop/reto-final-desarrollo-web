@@ -11,13 +11,13 @@ class IndexController {
     #privateTaskService;
 
     constructor() {
-        const headerData = ['id', 'idBoard', 'idColumn', 'name', 'description', 'deliveryDate','createdAt','updateAt'];
+        const headerData = ['id', 'idColumn', 'idBoard', 'name', 'description', 'deliveryDate','createdAt','updateAt'];
         this.#privateView = new IndexView(headerData);
         this.#privateTaskService = new TaskService();
     }
 
     async init() {
-        await this.#privateTaskService.loadTasksByBoard();
+        await this.#privateTaskService.loadTasksByBoard(1);
         this.#privateView.Data = this.#privateTaskService.getTasksByBoard();
         this.#privateView.init();
     }

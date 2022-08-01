@@ -1,5 +1,7 @@
 "use strict";
 
+import { LogModel } from "../model/log.model.mjs";
+
 export class TaskModel {
     #id;
     #idColumn;
@@ -12,17 +14,15 @@ export class TaskModel {
     #logs;
 
     constructor(data) {
-        if (data) {
-            this.#id = data.id;
-            this.#idColumn = data.idColumn;
-            this.#idBoard = data.idBoard;
-            this.#name = data.name;
-            this.#description = data.description;
-            this.#deliveryDate = data.deliveryDate;
-            this.#createdAt = data.createdAt;
-            this.#updateAt = data.updateAt;
-            this.#logs = data.logs;
-        }
+        this.#id = data.id;
+        this.#idColumn = data.idColumn;
+        this.#idBoard = data.idBoard;
+        this.#name = data.name;
+        this.#description = data.description;
+        this.#deliveryDate = data.deliveryDate;
+        this.#createdAt = data.createdAt;
+        this.#updateAt = data.updatedAt;
+        this.#logs = this.#toArrayLogs(data.logs);
     }
 
     get Id() {
@@ -33,19 +33,19 @@ export class TaskModel {
         this.#id = id;
     }
 
-    get idColumn() {
+    get IdColumn() {
         return this.#idColumn;
     }
 
-    set idColumn(idColumn) {
+    set IdColumn(idColumn) {
         this.#idColumn = idColumn;
     }
 
-    get idBoard() {
+    get IdBoard() {
         return this.#idBoard;
     }
 
-    set idBoard(idBoard) {
+    set IdBoard(idBoard) {
         this.#idBoard = idBoard;
     }
 
@@ -89,11 +89,11 @@ export class TaskModel {
         this.#updateAt = updateAt;
     }
 
-    get Logs(){
+    get Logs() {
         return this.#logs;
     }
 
-    set Logs(logs){
+    set Logs(logs) {
         this.#logs = logs;
     }
 
@@ -107,7 +107,16 @@ export class TaskModel {
             deliveryDate: this.#deliveryDate,
             createdAt: this.#createdAt,
             updateAt: this.#updateAt,
-            logs: this.#logs
+            logs: this.#logs,
         };
+    }
+
+    #toArrayLogs(data) {
+        const arrayLogs = [];
+        data.forEach((item) => {
+            const log = new LogModel(item);
+            arrayLogs.push(log);
+        });
+        return arrayLogs;
     }
 }
