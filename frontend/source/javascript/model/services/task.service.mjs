@@ -1,18 +1,26 @@
 import { Config } from "../../config.mjs";
-import { UserModel } from "../user.model.mjs";
+import { TaskModel } from "../task.model.mjs";
 
-export class MyUsersService {
+export class TaskService {
+    #tasks;
 
-    constructor() { }
+    constructor() {
+        this.#tasks = [];
+     }
 
-    async getUsers() {
-        const data = await fetch(`${Config.BackendURL}/usuario/records`).then(response => response.json());
-        const users = new Array();
-        data.items.forEach(item => {
-            const user = new UserModel(item);
-            users.push(user);
+    async loadTasksByBoard() {
+        const response = await fetch(`${Config.BackendURL}/1`)
+        // .then(response => response.json());
+        const { data } = await response.json(); 
+        data.forEach(item => {
+            const task = new TaskModel(item);
+            this.#tasks.push(task);
         });
-        return users;
+        return this.#tasks;
+    }
+
+    getTasksByBoard(){
+        return this.#tasks;
     }
 
     async getUserById(id) {

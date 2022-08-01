@@ -10,9 +10,13 @@ export class IndexView {
     #privateData;
 
     constructor(header) {
-        this.#privateContainer = document.querySelector('.container');
+        this.#privateContainer = document.querySelector('#container');
         this.#privateNavbar = new Navbar();
         this.#privateTable = new Table(header);
+    }
+
+    get Data(){
+        return this.#privateData;
     }
 
     set Data(data) {

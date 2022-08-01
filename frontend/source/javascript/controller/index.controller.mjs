@@ -1,25 +1,28 @@
 "use strict";
 
 // Services
-import { MyUsersService } from "../model/services/my-users.service.mjs";
+import { TaskService } from "../model/services/task.service.mjs";
 
 // Views
 import { IndexView } from "../view/index.view.mjs";
 
 class IndexController {
     #privateView;
-    #privateMyUsersService;
+    #privateTaskService;
 
     constructor() {
-        const headerData = ['nombre', 'apellidos', 'correo', 'teléfono', 'creado', 'acciones'];
+        const headerData = ['id', 'idBoard', 'idColumn', 'name', 'description', 'deliveryDate','createdAt','updateAt'];
         this.#privateView = new IndexView(headerData);
-        this.#privateMyUsersService = new MyUsersService();
+        this.#privateTaskService = new TaskService();
     }
 
     async init() {
-        this.#privateView.Data = await this.#privateMyUsersService.getUsers();
+        await this.#privateTaskService.loadTasksByBoard();
+        this.#privateView.Data = this.#privateTaskService.getTasksByBoard();
+        console.log(this.#privateView.Data)
         this.#privateView.init();
     }
+
 }
 
 export const index = new IndexController();
