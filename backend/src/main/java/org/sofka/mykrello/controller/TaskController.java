@@ -22,7 +22,7 @@ public class TaskController {
     @Autowired
     private LogService logService;
 
-    @GetMapping(path = "/api/vi/task/task-board/{idBoard}")
+    @GetMapping(path = "/api/v1/task/task-board/{idBoard}")
     public ResponseEntity<MyResponseUtility> getAllTasksByBoard(@PathVariable(value="idBoard") Integer idBoard){
         response.data = taskService.findAllTasksById(idBoard);
         return new ResponseEntity<>(response,HttpStatus.OK);

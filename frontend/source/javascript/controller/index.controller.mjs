@@ -19,7 +19,6 @@ class IndexController {
     async init() {
         await this.#privateTaskService.loadTasksByBoard();
         this.#privateView.Data = this.#privateTaskService.getTasksByBoard();
-        console.log(this.#privateView.Data)
         this.#privateView.init();
     }
 

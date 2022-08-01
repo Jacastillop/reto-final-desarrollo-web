@@ -10,7 +10,6 @@ export class TaskService {
 
     async loadTasksByBoard() {
         const response = await fetch(`${Config.BackendURL}/1`)
-        // .then(response => response.json());
         const { data } = await response.json(); 
         data.forEach(item => {
             const task = new TaskModel(item);

@@ -72,7 +72,7 @@ export class Table {
 
             const tdAcciones = this.#privateAcciones(document.createElement('td'), item.id);
 
-            tr.append(tdId, tdIdColumn, tdIdBoard, tdName, tdDescription,tdDeliveryDate,tdCreatedAt,tdUpdatedAt,tdAcciones);
+            tr.append(tdId, tdIdBoard, tdIdColumn, tdName, tdDescription,tdDeliveryDate,tdCreatedAt,tdUpdatedAt,tdAcciones);
             tbody.append(tr);
         });
 

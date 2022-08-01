@@ -9,6 +9,7 @@ export class TaskModel {
     #deliveryDate;
     #createdAt;
     #updateAt;
+    #logs;
 
     constructor(data) {
         if (data) {
@@ -20,6 +21,7 @@ export class TaskModel {
             this.#deliveryDate = data.deliveryDate;
             this.#createdAt = data.createdAt;
             this.#updateAt = data.updateAt;
+            this.#logs = data.logs;
         }
     }
 
@@ -87,6 +89,14 @@ export class TaskModel {
         this.#updateAt = updateAt;
     }
 
+    get Logs(){
+        return this.#logs;
+    }
+
+    set Logs(logs){
+        this.#logs = logs;
+    }
+
     getValues() {
         return {
             id: this.#id,
@@ -96,7 +106,8 @@ export class TaskModel {
             description: this.#description,
             deliveryDate: this.#deliveryDate,
             createdAt: this.#createdAt,
-            updateAt: this.#updateAt
+            updateAt: this.#updateAt,
+            logs: this.#logs
         };
     }
 }
