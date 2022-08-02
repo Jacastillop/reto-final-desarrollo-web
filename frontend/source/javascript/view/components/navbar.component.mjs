@@ -1,3 +1,5 @@
+import { Config } from "../../config.mjs";
+
 export class Navbar {
 
     #privateNavbar;
@@ -12,22 +14,17 @@ export class Navbar {
 
     #privateGenerateNavbar() {
         const nav = document.createElement('nav');
-        nav.classList.add('navbar', 'navbar-expand-lg', 'bg-light');
+        nav.classList.add('navbar', 'navbar-expand-lg', 'bg-light','navbar-dark', 'bg-dark');
 
         const div = document.createElement('div');
         div.classList.add('container-fluid');
 
         const name = document.createElement('a');
         name.classList.add('navbar-brand');
-        name.href = '#';
-        name.textContent = 'Navbar';
+        name.href = `${Config.FrontendURL}/index.html`;
+        name.textContent = 'Krello';
 
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.classList.add('btn', 'btn-success');
-        button.textContent = 'Agregar';
-
-        div.append(name, button);
+        div.append(name);
         nav.appendChild(div);
 
         this.#privateNavbar = nav;
