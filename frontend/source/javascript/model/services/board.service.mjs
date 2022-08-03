@@ -45,6 +45,18 @@ export class BoardService {
         ).then(response => response.json());
     }
 
+    async delete(id) {
+        await fetch(
+            `${Config.BackendURL}board/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        ).then(response => response.json());
+    }
+
     async update(id, data) {
         await fetch(
             `${Config.BackendURL}/usuario/records/${id}`,

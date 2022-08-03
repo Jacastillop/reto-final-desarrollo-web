@@ -11,7 +11,7 @@ class BoardsController {
   #boardService;
 
   constructor() {
-    this.#privateView = new BoardsView();
+    this.#privateView = new BoardsView(this);
     this.#boardService = new BoardService();
   }
 
@@ -23,6 +23,10 @@ class BoardsController {
 
   async createBoard(bodyForm){
     await this.#boardService.create(bodyForm);
+  }
+
+  async deleteBoard(idBoard){
+    await this.#boardService.delete(idBoard);
   }
 
 }

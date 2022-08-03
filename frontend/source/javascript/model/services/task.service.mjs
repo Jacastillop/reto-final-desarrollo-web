@@ -26,7 +26,6 @@ export class TaskService {
 
     async loadTaskById(id) {
         const response = await fetch(`${Config.BackendURL}task/${id}`);
-        debugger;
         const { data } = await response.json();
         this.#taskById = new TaskModel(data);
     }

@@ -3,20 +3,22 @@
 import { Config } from "../config.mjs";
 import { Card } from "./components/card.component.mjs";
 import { Navbar } from "./components/navbar.component.mjs";
-import { Modal } from "./components/modal.component.mjs"
+import { Modal } from "./components/modal.component.mjs";
 
 export class BoardsView {
   #body;
   #container;
   #navbar;
-  #data;
   #modal;
+  #controller;
+  #data;
 
-  constructor() {
+  constructor(boardController) {
+    this.#controller = boardController;
     this.#body = document.querySelector("#body");
     this.#container = document.querySelector("#container");
     this.#navbar = new Navbar();
-    this.#modal = new Modal("board");
+    this.#modal = new Modal("board", boardController);
   }
 
   init() {
@@ -33,13 +35,13 @@ export class BoardsView {
       ${this.#modal.get()}
       `;
     this.#modal.loadEvents();
+    this.#eventDeletButton(this.#controller);
   }
-
 
   #createGridCards() {
     let gridCard = ``;
     this.#data.forEach((board) => {
-      let card = new Card();
+      let card = new Card(this.#controller);
       card.Data = board;
       card.addActions();
       gridCard += `
@@ -51,6 +53,15 @@ export class BoardsView {
     return gridCard;
   }
 
+  #eventDeletButton(controller) {
+    const botones = document.querySelectorAll("#deleteButton");
+    botones.forEach((boton) => {
+      boton.addEventListener("click", (evento) => {
+        controller.deleteBoard(boton.name);
+        setTimeout(() => {location.reload();}, 500);
+      });
+    });
+  }
 
   get Data() {
     return this.#data;

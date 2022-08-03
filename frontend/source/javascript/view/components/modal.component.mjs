@@ -1,5 +1,4 @@
 
-import { boards as controller } from "../../controller/boards.controller.mjs";
 
 export class Modal {
     #modalType;
@@ -8,12 +7,12 @@ export class Modal {
     #modalFooter;
     #controller;
 
-    constructor(element) {
+    constructor(element,controller) {
         this.#modalType = element;
         this.#modalHeader = this.#createHeader();
         this.#modalBody = this.#createBody();
         this.#modalFooter = this.#createFooter();
-        //this.#controller = controller;
+        this.#controller = controller;
     }
 
     get() {
@@ -52,11 +51,10 @@ export class Modal {
                 event.preventDefault()
                 const input = document.getElementById("inputBoardName");
                 const { name, value } = input;
-                console.log({ [name]: value });
-                controller.createBoard({ [name]: value });
+                this.#controller.createBoard({ [name]: value });
                 setTimeout(() => {
                     location.reload();
-                }, 1500);
+                }, 500);
             }
             form.classList.add('was-validated')
         }
