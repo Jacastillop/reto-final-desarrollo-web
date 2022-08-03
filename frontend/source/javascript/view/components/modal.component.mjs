@@ -1,16 +1,22 @@
 
-export class Modal{
+import { boards } from "../../controller/boards.controller.mjs";
+
+export class Modal {
+    #modalType;
     #modalHeader;
     #modalBody;
     #modalFooter;
+    #controller;
 
-    constructor(element){
-        this.#modalHeader =this.#createHeader(element);
-        this.#modalBody = this.#createBody(element);
-        this.#modalFooter = this.#createFooter(element);
+    constructor(element) {
+        this.#modalType = element;
+        this.#modalHeader = this.#createHeader();
+        this.#modalBody = this.#createBody();
+        this.#modalFooter = this.#createFooter();
+        //this.#controller = controller;
     }
 
-    get(){
+    get() {
         return `
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -30,50 +36,57 @@ export class Modal{
         `;
     }
 
-    #validateForms() {
+    loadEvents() {
         const forms = document.querySelectorAll('.needs-validation')
         Array.from(forms).forEach(form => {
-          form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-              event.preventDefault()
-              event.stopPropagation()
-            } else {
-            event.preventDefault()
-            debugger
-            const formData = new FormData(form)
-            console.log(formData.get('inputBoardName'))
-          }      
-          form.classList.add('was-validated')
-            //boards.createBoard(formData);
-          }, false)
+            form.addEventListener('submit', this.#typeSubmitEvent(), false)
         })
-      }
+    }
 
-    #createHeader(element){
-        if(element === "board") return `
+    #typeSubmitEvent() {
+        return (event) => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            } else {
+                event.preventDefault()
+                const input = document.getElementById("inputBoardName");
+                const { name, value } = input;
+                console.log({ [name]: value });
+                boards.createBoard({ [name]: value });
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            }
+            form.classList.add('was-validated')
+        }
+    }
+
+    #createHeader() {
+        if (this.#modalType === "board") return `
             <h5 class="modal-title " id="modalLabel">Add New Board</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         `;
-        if (element === "task") return `
+        if (this.#modalType === "task") return `
             <h5 class="modal-title " id="modalLabel">Add New Task</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         `
         return ``;
     }
 
-    #createBody(element){
-        if(element === "board") return `
-            <form class="row g-3 needs-validation" novalidate>
+    #createBody() {
+        if (this.#modalType === "board") return `
+            <form class="row g-3 needs-validation" novalidate id="form">
                 <div class="input-group mb-3 has-validation">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="inputBoardName" placeholder="Board Name" required>
-                        <label for="floatingInputGroup1">Board Name</label>
+                        <input type="text" class="form-control" id="inputBoardName" placeholder="Board Name" name="name" required>
+                        <label for="inputBoardName">Board Name</label>
                     </div>
                     <button class="btn btn-outline-success" type="submit" id="button-add"><i class="bi bi-plus-circle"></i> Add</button>
                 </div>
             </form>
         `;
-        if (element === "task") return `
+        if (this.#modalType === "task") return `
             <form class="row g-3 needs-validation" novalidate>
                 <div class="input-group mb-3 has-validation">
                     <div class="form-floating">
@@ -87,9 +100,9 @@ export class Modal{
         return ``;
     }
 
-    #createFooter(element){
-        if(element === "board") return `${Date(Date.now()).toLocaleString()}`;
-        if (element === "task") return `
+    #createFooter() {
+        if (this.#modalType === "board") return `${Date(Date.now()).toLocaleString()}`;
+        if (this.#modalType === "task") return `
             <button id="submit-button" type="submit" class="btn btn-success"> </button>
         `;
         return ``;

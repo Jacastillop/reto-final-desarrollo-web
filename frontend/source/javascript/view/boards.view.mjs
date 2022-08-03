@@ -32,6 +32,7 @@ export class BoardsView {
       </div>      
       ${this.#modal.get()}
       `;
+    this.#modal.loadEvents();
   }
 
 
