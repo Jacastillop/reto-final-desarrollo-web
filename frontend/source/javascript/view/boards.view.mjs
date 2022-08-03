@@ -3,18 +3,20 @@
 import { Config } from "../config.mjs";
 import { Card } from "./components/card.component.mjs";
 import { Navbar } from "./components/navbar.component.mjs";
+import { Modal } from "./components/modal.component.mjs"
 
 export class BoardsView {
   #body;
   #container;
-  #gridCards;
-  #data;
   #navbar;
+  #data;
+  #modal;
 
   constructor() {
     this.#body = document.querySelector("#body");
     this.#container = document.querySelector("#container");
     this.#navbar = new Navbar();
+    this.#modal = new Modal("board");
   }
 
   init() {
@@ -23,13 +25,15 @@ export class BoardsView {
       <div class="row row-cols-1 row-cols-md-3 g-4 ">
         <div class="col">
           <div class="d-grid gap-2 col-8 mx-auto">
-            <a class="btn btn-primary" href="${Config.FrontendURL}/update.html?id=0"><i class="bi bi-plus-circle"></i> add Board</a>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-circle"></i> add Board</button>
           </div>
         </div>
         ${this.#createGridCards()}
-      </div>
+      </div>      
+      ${this.#modal.get()}
       `;
   }
+
 
   #createGridCards() {
     let gridCard = ``;
@@ -45,6 +49,7 @@ export class BoardsView {
     });
     return gridCard;
   }
+
 
   get Data() {
     return this.#data;

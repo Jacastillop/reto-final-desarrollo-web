@@ -20,6 +20,11 @@ class BoardsController {
     this.#privateView.Data = this.#boardService.getBoards();
     this.#privateView.init();
   }
+
+  async createBoard(bodyForm){
+    await this.#boardService.create(bodyForm);
+  }
+
 }
 
 export const boards = new BoardsController();

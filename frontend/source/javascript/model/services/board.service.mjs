@@ -12,14 +12,13 @@ export class BoardService {
     async loadBoards() {
         const response = await fetch(`${Config.BackendURL}boards`)        
         const { data } = await response.json(); 
-        console.log(data)
         data.forEach(item => {
             const board = new BoardModel(item);
             this.#boards.push(board);
         });
     }
 
-    getBoards(){
+    getBoards(){        
         return this.#boards;
     }
 
@@ -31,6 +30,19 @@ export class BoardService {
 
     getTaskById(){
         return this.#taskById;
+    }
+
+    async create(data) {
+        await fetch(
+            `${Config.BackendURL}board`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            }
+        ).then(response => response.json());
     }
 
     async update(id, data) {
@@ -45,5 +57,7 @@ export class BoardService {
             }
         ).then(response => response.json());
     }
+
+
 
 }
