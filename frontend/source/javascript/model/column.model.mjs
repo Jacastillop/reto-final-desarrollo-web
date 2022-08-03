@@ -12,8 +12,8 @@ export class ColumnModel {
     constructor(data) {
         this.#id = data.id;
         this.#name = data.name;
-        this.#createdAt = new Date(data.createdAt).toLocaleString();
-        this.#updateAt = new Date(data.updatedAt).toLocaleString();
+        this.#createdAt = this.#formatDate(data.createdAt);
+        this.#updateAt = this.#formatDate(data.updatedAt);
         this.#tasks = this.#toArrayTask(data.task);
     }
 
@@ -34,6 +34,10 @@ export class ColumnModel {
             arrayTask.push(task);
         });
         return arrayTask;
+    }
+
+    #formatDate(date){
+        return (date===null) ? "- - -" : new Date(date).toLocaleString(); 
     }
 
     get Id() {

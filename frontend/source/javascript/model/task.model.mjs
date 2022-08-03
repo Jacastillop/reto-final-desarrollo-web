@@ -18,11 +18,38 @@ export class TaskModel {
         this.#idColumn = data.idColumn;
         this.#idBoard = data.idBoard;
         this.#name = data.name;
-        this.#description = data.description;
-        this.#deliveryDate = new Date(data.deliveryDate).toLocaleString();
-        this.#createdAt = new Date(data.createdAt).toLocaleString();
-        this.#updateAt = new Date(data.updatedAt).toLocaleString();
+        this.#description = data.description===null?"":data.description;
+        this.#deliveryDate = this.#formatDate(data.deliveryDate);
+        this.#createdAt = this.#formatDate(data.createdAt);
+        this.#updateAt = this.#formatDate(data.updatedAt);
         this.#logs = this.#toArrayLogs(data.logs);
+    }
+
+    #formatDate(date){
+        return (date===null) ? "- - -" : new Date(date).toLocaleString(); 
+    }
+
+    getValues() {
+        return {
+            id: this.#id,
+            idColumn: this.#idColumn,
+            idBoard: this.#idBoard,
+            name: this.#name,
+            description: this.#description,
+            deliveryDate: this.#deliveryDate,
+            createdAt: this.#createdAt,
+            updateAt: this.#updateAt,
+            logs: this.#logs,
+        };
+    }
+
+    #toArrayLogs(data) {
+        const arrayLogs = [];
+        data.forEach((item) => {
+            const log = new LogModel(item);
+            arrayLogs.push(log);
+        });
+        return arrayLogs;
     }
 
     get Id() {
@@ -97,26 +124,5 @@ export class TaskModel {
         this.#logs = logs;
     }
 
-    getValues() {
-        return {
-            id: this.#id,
-            idColumn: this.#idColumn,
-            idBoard: this.#idBoard,
-            name: this.#name,
-            description: this.#description,
-            deliveryDate: this.#deliveryDate,
-            createdAt: this.#createdAt,
-            updateAt: this.#updateAt,
-            logs: this.#logs,
-        };
-    }
 
-    #toArrayLogs(data) {
-        const arrayLogs = [];
-        data.forEach((item) => {
-            const log = new LogModel(item);
-            arrayLogs.push(log);
-        });
-        return arrayLogs;
-    }
 }

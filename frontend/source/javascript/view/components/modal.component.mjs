@@ -1,5 +1,5 @@
 
-import { boards } from "../../controller/boards.controller.mjs";
+import { boards as controller } from "../../controller/boards.controller.mjs";
 
 export class Modal {
     #modalType;
@@ -53,7 +53,7 @@ export class Modal {
                 const input = document.getElementById("inputBoardName");
                 const { name, value } = input;
                 console.log({ [name]: value });
-                boards.createBoard({ [name]: value });
+                controller.createBoard({ [name]: value });
                 setTimeout(() => {
                     location.reload();
                 }, 1500);

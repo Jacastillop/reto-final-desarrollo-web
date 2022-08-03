@@ -12,8 +12,8 @@ export class BoardModel {
     constructor(data) {
         this.#id = data.id;
         this.#name = data.name;
-        this.#createdAt = new Date(data.createdAt).toLocaleString();
-        this.#updateAt = new Date(data.updatedAt).toLocaleString();        
+        this.#createdAt = this.#formatDate(data.createdAt);
+        this.#updateAt = this.#formatDate(data.updatedAt);        
         this.#columns = this.#toArrayColumns(data.columnsForBoard);
     }
 
@@ -25,6 +25,10 @@ export class BoardModel {
             updateAt: this.#updateAt,
             columns: this.#columns,
         };
+    }
+
+    #formatDate(date){
+        return (date===null) ? "- - -" : new Date(date).toLocaleString(); 
     }
 
     #toArrayColumns(data) {
