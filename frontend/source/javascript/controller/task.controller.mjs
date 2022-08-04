@@ -7,11 +7,11 @@ import { TaskService } from "../model/services/task.service.mjs";
 import { TaskView } from "../view/task.view.mjs";
 
 class TaskController {
-    #view;
+    #taskView;
     #taskService;
 
     constructor() {
-        this.#view = new TaskView();
+        this.#taskView = new TaskView();
         this.#taskService = new TaskService();
     }
 
@@ -19,8 +19,8 @@ class TaskController {
         const params = new URLSearchParams(window.location.search);
         const taskId = params.get("id");
         await this.#taskService.loadTaskById(taskId);
-        this.#view.Data = this.#taskService.getTaskById();
-        this.#view.init();
+        this.#taskView.Data = this.#taskService.getTaskById();
+        this.#taskView.init();
     }
 
 }

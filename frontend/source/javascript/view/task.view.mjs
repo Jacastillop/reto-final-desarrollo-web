@@ -1,6 +1,6 @@
 "use strict";
 
-import { Card } from "./components/card.component.mjs";
+import { Card } from "./components/cardTask.component.mjs";
 import { Table } from "./components/table.component.mjs";
 import { Navbar } from "./components/navbar.component.mjs";
 
@@ -27,14 +27,6 @@ export class TaskView {
     this.#navbar = new Navbar();
   }
 
-  get Data() {
-    return this.#data;
-  }
-
-  set Data(data) {
-    this.#data = data;
-  }
-
   init() {
     this.#body.prepend(this.#navbar.get());
     this.#card.Data = this.#data;
@@ -54,4 +46,14 @@ export class TaskView {
         </div>
       `;
   }
+
+  get Data() {
+    return this.#data;
+  }
+
+  set Data(data) {
+    this.#data = data;
+  }
+
+
 }

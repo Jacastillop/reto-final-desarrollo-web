@@ -20,15 +20,9 @@ export class Modal {
             <div class="modal fade" id="modal${this.#modalType}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header ">
-                            ${this.#modalHeader}
-                        </div>
-                        <div class="modal-body">
-                            ${this.#modalBody}
-                        </div>
-                        <div class="modal-footer">
-                            ${this.#modalFooter}
-                        </div>
+                        ${this.#modalHeader}
+                        ${this.#modalBody}
+                        ${this.#modalFooter}
                     </div>
                 </div>
             </div>
@@ -62,19 +56,19 @@ export class Modal {
 
     #typeEvent(value, idBoard) {
         if (this.#modalType === "Create") {            
-            alert(`Create-- Value: ${value} Type: ${this.#modalType} Id: ${idBoard}`);
             this.#controller.createBoard({ ["name"]: value });
         }
         if (this.#modalType === "Update") {
-            this.#controller.updateBoard(idBoard,{ "name": value });                            
-            alert(`Update-- Value: ${value} Type: ${this.#modalType} Id: ${idBoard}`);
+            this.#controller.updateBoard(idBoard,{ "name": value });              
         }
     }
 
     #createHeader() {
-        return `
-            <h5 class="modal-title " id="modalLabel">${this.#modalType} Board</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        return `        
+            <div class="modal-header ">
+                <h5 class="modal-title " id="modalLabel">${this.#modalType} Board</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
         `;
     }
 
@@ -86,20 +80,27 @@ export class Modal {
             `<button class="btn btn-outline-success" type="submit" id="button-add"><i class="bi bi-pencil-square"></i> Edit</button>`;
 
         return `
-            <form class="row g-3 needs-validation" id="form${this.#modalType}" name="">
-                <div class="input-group mb-3 has-validation">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="input${this.#modalType}BoardName" placeholder="Board Name" name="inputName" required>
-                        <label for="input${this.#modalType}BoardName">Board Name</label>
+            <div class="modal-body">
+                <form class="row g-3 needs-validation" id="form${this.#modalType}" name="">
+                    <div class="input-group mb-3 has-validation">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="input${this.#modalType}BoardName" placeholder="Board Name" name="inputName" required>
+                            <label for="input${this.#modalType}BoardName">Board Name</label>
+                        </div>
+                        ${typeButton}
                     </div>
-                    ${typeButton}
-                </div>
-            </form>
+                </form>
+            </div>
         `;
     }
 
     #createFooter() {
-        return `${Date(Date.now()).toLocaleString()}`;
+        return `
+            <div class="modal-footer">
+                ${Date(Date.now()).toLocaleString()}
+            </div>
+        `;
+        
     }
 
 

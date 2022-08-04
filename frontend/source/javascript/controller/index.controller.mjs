@@ -1,36 +1,39 @@
 "use strict";
 
 // Services
-import { TaskService } from "../model/services/task.service.mjs";
+import { BoardService } from "../model/services/board.service.mjs";
 
 // Views
-import { IndexView } from "../view/index.view.mjs";
+import { BoardsView } from "../view/index.view.mjs";
 
-class IndexController {
-  #privateView;
-  #privateTaskService;
+class BoardsController {
+  #boardsView;
+  #boardService;
 
   constructor() {
-    const headerData = [
-      "id",
-      "idColumn",
-      "idBoard",
-      "name",
-      "description",
-      "deliveryDate",
-      "createdAt",
-      "updateAt",
-    ];
-    this.#privateView = new IndexView(headerData);
-    this.#privateTaskService = new TaskService();
+    this.#boardsView = new BoardsView(this);
+    this.#boardService = new BoardService();
   }
 
   async init() {
-    await this.#privateTaskService.loadTasksByBoard(1);
-    this.#privateView.Data = this.#privateTaskService.getTasksByBoard();
-    this.#privateView.init();
+    await this.#boardService.loadBoards();
+    this.#boardsView.Data = this.#boardService.getBoards();
+    this.#boardsView.init();
   }
+
+  async createBoard(bodyForm){
+    await this.#boardService.create(bodyForm);
+  }
+
+  async deleteBoard(idBoard){
+    await this.#boardService.delete(idBoard);
+  }
+
+  async updateBoard(idBoard,bodyForm){
+    await this.#boardService.update(idBoard,bodyForm);
+  }
+
 }
 
-export const index = new IndexController();
-index.init();
+export const boards = new BoardsController();
+boards.init();

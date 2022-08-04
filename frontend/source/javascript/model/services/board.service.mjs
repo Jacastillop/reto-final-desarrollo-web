@@ -3,7 +3,7 @@ import { BoardModel } from "../board.model.mjs";
 
 export class BoardService {
     #boards;
-    #taskById;
+    #boardById;
 
     constructor() {
         this.#boards = [];
@@ -22,14 +22,14 @@ export class BoardService {
         return this.#boards;
     }
 
-    async loadTaskById(id) {
-        const response = await fetch(`${Config.BackendURL}task/${id}`);
+    async loadBoardById(id) {
+        const response = await fetch(`${Config.BackendURL}board/${id}`);
         const { data } = await response.json();
-        this.#taskById = new TaskModel(data);
+        this.#boardById = new BoardModel(data);
     }
 
-    getTaskById(){
-        return this.#taskById;
+    getBoardById(){
+        return this.#boardById;
     }
 
     async create(data) {
