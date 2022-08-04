@@ -29,6 +29,10 @@ class BoardsController {
     await this.#boardService.delete(idBoard);
   }
 
+  async updateBoard(idBoard,bodyForm){
+    await this.#boardService.update(idBoard,bodyForm);
+  }
+
 }
 
 export const boards = new BoardsController();

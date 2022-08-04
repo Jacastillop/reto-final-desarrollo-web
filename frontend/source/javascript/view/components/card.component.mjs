@@ -67,8 +67,8 @@ export class Card {
 
     if (this.#withActions) {
       actions = `
-      <div class="btn-group ">        
-        <a class="btn btn-outline-success" href="${Config.FrontendURL}/update.html?id=${id}"><i class="bi bi-pencil-square"></i> Show</a>
+      <div class="btn-group ">
+        <button type="button" id="editButton" name=${id} class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="bi bi-pencil-square"></i> Edit</button>        
         <a class="btn btn-outline-primary" href="${Config.FrontendURL}/update.html?id=${id}"><i class="bi bi-card-text"></i> Show</a>
         <button class="btn btn-outline-danger" type="button" id="deleteButton" name=${id}><i class="bi bi-trash"></i> Delete</button>
       </div>

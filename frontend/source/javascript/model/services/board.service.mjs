@@ -59,9 +59,9 @@ export class BoardService {
 
     async update(id, data) {
         await fetch(
-            `${Config.BackendURL}/usuario/records/${id}`,
+            `${Config.BackendURL}board/${id}`,
             {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
