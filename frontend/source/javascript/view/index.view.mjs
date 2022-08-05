@@ -1,6 +1,6 @@
 "use strict";
 
-import { Card } from "./components/cardBoard.component.mjs";
+import { CardBoard } from "./components/cardBoard.component.mjs";
 import { Navbar } from "./components/navbar.component.mjs";
 import { Modal } from "./components/modalBoard.component.mjs";
 
@@ -45,12 +45,11 @@ export class BoardsView {
   #createGridCards() {
     let gridCard = ``;
     this.#data.forEach((board) => {
-      let card = new Card(this.#controller);
+      let card = new CardBoard(this.#controller);
       card.Data = board;
-      card.addActions();
       gridCard += `
         <div class="col">
-          ${card.create(true)}
+          ${card.createCardBoardDetails()}
         </div>
       `;
     });

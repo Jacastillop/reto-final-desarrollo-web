@@ -18,7 +18,7 @@ export class Table {
   }
 
   #privateGenerateTable() {
-    const table = document.createElement("table");
+    const table = document.createElement("table-light");
     table.classList.add("table");
     const thead = this.#privateCreateHeader(document.createElement("thead"));
     const tbody = this.#privateCreateBody(document.createElement("tbody"));

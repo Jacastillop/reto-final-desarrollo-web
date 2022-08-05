@@ -1,74 +1,61 @@
 import { Config } from "../../config.mjs";
 
-export class Card {
-  #card;
+export class CardTask {
   #data;
-  #withActions;
-  #withList;
   #controller;
 
   constructor(controller) {
-    this.#withActions = false;
-    this.#withList = false;
     this.#controller = controller;
   }
 
-  
-  create() {
-    this.#createTaskCard();
-    return this.#card;
+
+  createTaskDetailsCard() {
+    const values = this.#data;
+    return `
+    <div class="card  h-100">
+        <h5 class="card-header">${values.Name}</h5>
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">Board: ${values.IdBoard}, Column: ${values.IdColumn}</h6>
+            <p class="card-text">Description: ${values.Description}</p>
+            <div class="btn-group ">
+            <button type="button" id="editButton" name=${values.Id} class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="bi bi-pencil-square"></i> Edit</button>
+            <button class="btn btn-outline-danger" type="button" id="deleteButton" name=${values.Id}><i class="bi bi-trash"></i> Delete</button>
+            </div>
+        </div>
+        <div class="card-footer ">Delivery Date: ${values.DeliveryDate}</div>
+        <ul class="list-group list-group-flush">
+        <li class="list-group-item">CreatedAt: ${values.CreatedAt}</li>
+        <li class="list-group-item">UpdatedAt: ${values.UpdatedAt}</li>
+      </ul>        
+    </div>`;
   }
 
 
-  #createTaskCard() {
+  createTaskCard() {
     const values = this.#data;
-    this.#card =  `
-        <div class="card h-100">
-            <h5 class="card-header">${values.Name}</h5>
+    const arrowLeft = (values.IdColumn !== 1) ? this.#buttonLeft(values): ``;
+    const arrowRigth = (values.IdColumn !== 3) ? this.#buttonRigth(values) : ``;
+    return `
+        <div class="card text-bg-dark border-primary  h-100">
             <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted">Board: ${values.IdBoard}, Column: ${values.IdColumn}</h6>
-                <p class="card-text">${values.Description}</p>
-                ${this.#createActions(values.Id)}
+              <h5 class="card-title">${values.Name}</h5>
+                <div class="btn-group "> 
+                ${arrowLeft}     
+                <a class="btn btn-outline-primary" href="${Config.FrontendURL}/taskdetails.html?id=${values.Id}"><i class="bi bi-card-text"></i> Show</a>
+                ${arrowRigth} 
+                </div>
             </div>
-            <div class="card-footer ">Delivery Date: ${values.DeliveryDate}</div>
-            ${this.#createList(values.CreatedAt, values.UpdateAt)}       
+            <div class="card-footer border-primary"><i class="bi bi-alarm"></i> ${values.DeliveryDate}</div>
+          </ul>        
         </div>`;
   }
 
-  #createList(createdAt, updatedAt) {
-    let list = ``;
-    if (this.#withList) {
-      list = `
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">CreatedAt: ${createdAt}</li>
-        <li class="list-group-item">UpdatedAt: ${updatedAt}</li>
-      </ul>   
-      `;
-    }
-    return list;
+  #buttonLeft(values){
+    return `<button type="button" id="leftButton" name=${values.Id} class="btn btn-outline-success"><i class="bi bi-arrow-left-square"></i></button>`;
   }
 
-  #createActions(id) {
-    let actions = ``;
-
-    if (this.#withActions) {
-      actions = `
-      <div class="btn-group ">
-        <button type="button" id="editButton" name=${id} class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="bi bi-pencil-square"></i> Edit</button>        
-        <a class="btn btn-outline-primary" href="${Config.FrontendURL}/boardDetails.html?id=${id}"><i class="bi bi-card-text"></i> Show</a>
-        <button class="btn btn-outline-danger" type="button" id="deleteButton" name=${id}><i class="bi bi-trash"></i> Delete</button>
-      </div>
-      `;
-    }
-    return actions;
-  }
-
-  addActions() {
-    this.#withActions = true;
-  }
-
-  addList() {
-    this.#withList = true;
+  #buttonRigth(values){
+    return `<button type="button" id="rightButton" name=${values.Id} class="btn btn-outline-success"><i class="bi bi-arrow-right-square"></i></button>`;
   }
 
 

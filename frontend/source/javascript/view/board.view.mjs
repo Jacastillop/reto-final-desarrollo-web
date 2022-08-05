@@ -1,6 +1,7 @@
 "use strict";
 
-import { Card } from "./components/cardBoard.component.mjs";
+import { CardBoard } from "./components/cardBoard.component.mjs";
+import { CardTask } from "./components/cardTask.component.mjs";
 import { Navbar } from "./components/navbar.component.mjs";
 
 export class BoardView {
@@ -27,14 +28,28 @@ export class BoardView {
     }
 
     #createGridColumns(){
+        let gridColumns = ``;
+        this.#data.Columns.forEach((column) => {
+          const columnCard = new CardBoard(this.#controller);
+          const gridTasks = this.#createGridTasks(column);
+          columnCard.Data = column;
+          gridColumns += `
+            <div class="col">
+              ${columnCard.createCardBoard(gridTasks)}
+            </div>
+          `;
+        });
+        return gridColumns;
+    }
+
+    #createGridTasks(column){
         let gridCard = ``;
-        this.#data.Columns.forEach((columns) => {
-          let card = new Card(this.#controller);
-          card.Data = columns;
-          card.addActions();
+        column.Tasks.forEach((task) => {
+          let card = new CardTask(this.#controller);
+          card.Data = task;
           gridCard += `
             <div class="col">
-              ${card.create(true)}
+              ${card.createTaskCard()}
             </div>
           `;
         });
